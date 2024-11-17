@@ -27,7 +27,7 @@ jobs:
       run: dotnet restore
 
     - name: Build the solution (Release)
-      run: dotnet build Berrevoets.Play.Economy.Common/Berrevoets.Play.Economy.Common.csproj --configuration Release
+      run: dotnet build Berrevoets.Aspire.Hosting.MailDev/Berrevoets.Aspire.Hosting.MailDev.csproj --configuration Release
 
     - name: Run tests
       run: dotnet test --no-restore --verbosity normal
@@ -36,7 +36,7 @@ jobs:
       id: extract-version
       shell: bash
       run: |
-        VERSION=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' Berrevoets.Play.Economy.Common/Berrevoets.Play.Economy.Common.csproj)
+        VERSION=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' Berrevoets.Aspire.Hosting.MailDev/Berrevoets.Aspire.Hosting.MailDev.csproj)
         if [ -z "$VERSION" ]; then
           echo "Error: Version could not be extracted."
           exit 1
@@ -73,12 +73,12 @@ jobs:
     - name: Build the solution (Release) again for packaging
       run: |
         echo "Building NuGet package with version: ${{ needs.build.outputs.version }}"
-        dotnet build Berrevoets.Play.Economy.Common/Berrevoets.Play.Economy.Common.csproj --configuration Release /p:PackageVersion=${{ needs.build.outputs.version }}
+        dotnet build Berrevoets.Aspire.Hosting.MailDev/Berrevoets.Aspire.Hosting.MailDev.csproj --configuration Release /p:PackageVersion=${{ needs.build.outputs.version }}
 
     - name: Pack Preview NuGet package (with symbols)
       run: |
         echo "Packing NuGet package with version: ${{ needs.build.outputs.version }}"
-        dotnet pack Berrevoets.Play.Economy.Common/Berrevoets.Play.Economy.Common.csproj --configuration Release --output "${{ github.workspace }}/output" /p:PackageVersion=${{ needs.build.outputs.version }} /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg
+        dotnet pack Berrevoets.Aspire.Hosting.MailDev/Berrevoets.Aspire.Hosting.MailDev.csproj --configuration Release --output "${{ github.workspace }}/output" /p:PackageVersion=${{ needs.build.outputs.version }} /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg
 
     - name: List output directory
       shell: bash
