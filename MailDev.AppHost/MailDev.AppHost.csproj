@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Sdk Name="Aspire.AppHost.Sdk" Version="9.0.0" />
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsAspireHost>true</IsAspireHost>
+    <UserSecretsId>6ac3571f-bc10-47e5-9c6e-e2e58b353548</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Berrevoets.Aspire.Hosting.MailDev\Berrevoets.Aspire.Hosting.MailDev.csproj" IsAspireProjectResource="false" />
+    <ProjectReference Include="..\Berrevoets.Aspire.TestApp\Berrevoets.Aspire.TestApp.csproj" />
+  </ItemGroup>
+
+</Project>

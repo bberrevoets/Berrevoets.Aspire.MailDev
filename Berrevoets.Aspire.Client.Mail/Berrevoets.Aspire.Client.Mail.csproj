@@ -6,9 +6,9 @@
 	  <Version>1.0.3</Version>
 	  <Authors>Bert Berrevoets</Authors>
 	  <Company>Berrevoets Systems</Company>
-	  <Product>Berrevoets.Aspire.Hosting.MailDev</Product>
-	  <Description>A library for a Fake Mail server in Aspire.</Description>
-	  <PackageTags>Aspire;Hosting;MailDev</PackageTags>
+	  <Product>Berrevoets.Aspire.Client.Mail</Product>
+	  <Description>A library for a mail server in Aspire.</Description>
+	  <PackageTags>Aspire;Client;MailDev</PackageTags>
 	  <PackageReadmeFile>readme.md</PackageReadmeFile>
 	  <RepositoryUrl>https://github.com/bberrevoets/Berrevoets.Aspire.MailDev</RepositoryUrl>
 	  <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -39,11 +39,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Aspire.Hosting" Version="9.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<None Include="assets/icon.png" Pack="true" PackagePath="assets/" />
 	</ItemGroup>
+
 
 </Project>
