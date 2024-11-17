@@ -13,7 +13,8 @@ jobs:
   build:
     runs-on: windows-latest
     outputs:
-      version: ${{ steps.extract-version.outputs.version }}
+      version_host: ${{ steps.extract-host-version.outputs.version_host }}
+      version_client: ${{ steps.extract-client-version.outputs.version_client }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -32,17 +33,29 @@ jobs:
     - name: Run tests
       run: dotnet test --no-restore --verbosity normal
 
-    - name: Extract version from .csproj
-      id: extract-version
+    - name: Extract host version from .csproj
+      id: extract-host-version
       shell: bash
       run: |
-        VERSION=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' Berrevoets.Play.Economy.Common/Berrevoets.Play.Economy.Common.csproj)
-        if [ -z "$VERSION" ]; then
+        VERSION_HOST=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' Berrevoets.Aspire.Hosting.MailDev/Berrevoets.Aspire.Hosting.MailDev.csproj)
+        if [ -z "$VERSION_HOST" ]; then
           echo "Error: Version could not be extracted."
           exit 1
         fi
-        echo "version=$VERSION" >> $GITHUB_OUTPUT
-        echo "Version extracted: $VERSION"
+        echo "version_host=$VERSION_HOST" >> $GITHUB_OUTPUT
+        echo "Version extracted: $VERSION_HOST"
+
+    - name: Extract client version from .csproj
+      id: extract-client-version
+      shell: bash
+      run: |
+        VERSION_CLIENT=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' Berrevoets.Aspire.Client.Mail/Berrevoets.Aspire.Client.Mail.csproj)
+        if [ -z "$VERSION_CLIENT" ]; then
+          echo "Error: Version could not be extracted."
+          exit 1
+        fi
+        echo "version_client=$VERSION_CLIENT" >> $GITHUB_OUTPUT
+        echo "Version extracted: $VERSION_CLIENT"
 
   publish:
     if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
@@ -68,15 +81,25 @@ jobs:
         fi
         mkdir "${{ github.workspace }}/output"
 
-    - name: Build the solution (Release) again for packaging
+    - name: Build the solution (Host Release) again for packaging
       run: |
-        echo "Building NuGet package with version: ${{ needs.build.outputs.version }}"
-        dotnet build Berrevoets.Play.Economy.Common/Berrevoets.Play.Economy.Common.csproj --configuration Release /p:PackageVersion=${{ needs.build.outputs.version }}
+        echo "Building NuGet package with version: ${{ needs.build.outputs.version_host }}"
+        dotnet build Berrevoets.Aspire.Hosting.MailDev/Berrevoets.Aspire.Hosting.MailDev.csproj --configuration Release /p:PackageVersion=${{ needs.build.outputs.version_host }}
 
-    - name: Pack Final NuGet package (with symbols)
+    - name: Build the solution (Client Release) again for packaging
       run: |
-        echo "Packing NuGet package with version: ${{ needs.build.outputs.version }}"
-        dotnet pack Berrevoets.Play.Economy.Common/Berrevoets.Play.Economy.Common.csproj --configuration Release --output "${{ github.workspace }}/output" /p:PackageVersion=${{ needs.build.outputs.version }} /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg
+        echo "Building NuGet package with version: ${{ needs.build.outputs.version_client }}"
+        dotnet build Berrevoets.Aspire.Client.Mail/Berrevoets.Aspire.Client.Mail.csproj --configuration Release /p:PackageVersion=${{ needs.build.outputs.version_client }}
+
+    - name: Pack Final NuGet Host package (with symbols)
+      run: |
+        echo "Packing NuGet package with version: ${{ needs.build.outputs.version_host }}"
+        dotnet pack Berrevoets.Aspire.Hosting.MailDev/Berrevoets.Aspire.Hosting.MailDev.csproj --configuration Release --output "${{ github.workspace }}/output" /p:PackageVersion=${{ needs.build.outputs.version_host }} /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg
+
+    - name: Pack Final NuGet Client package (with symbols)
+      run: |
+        echo "Packing NuGet package with version: ${{ needs.build.outputs.version_client }}"
+        dotnet pack Berrevoets.Aspire.Client.Mail/Berrevoets.Aspire.Client.Mail.csproj --configuration Release --output "${{ github.workspace }}/output" /p:PackageVersion=${{ needs.build.outputs.version_client }} /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg
 
     - name: List output directory
       shell: bash
