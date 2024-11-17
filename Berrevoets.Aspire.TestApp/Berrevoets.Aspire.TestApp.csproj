@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Berrevoets.Aspire.Client.MailDev\Berrevoets.Aspire.Client.Mail.csproj" />
     <ProjectReference Include="..\MailDev.ServiceDefaults\MailDev.ServiceDefaults.csproj" />
   </ItemGroup>
 
