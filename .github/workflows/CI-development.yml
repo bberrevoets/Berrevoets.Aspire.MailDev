@@ -37,13 +37,13 @@ jobs:
       shell: bash
       run: |
         VERSION_HOST=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' Berrevoets.Aspire.Hosting.MailDev/Berrevoets.Aspire.Hosting.MailDev.csproj)
-        if [ -z "VERSION_HOST" ]; then
+        if [ -z "$VERSION_HOST" ]; then
           echo "Error: Version could not be extracted."
           exit 1
         fi
-        VERSION_HOST="VERSION_HOST-preview"
-        echo "version_host=VERSION_HOST" >> $GITHUB_OUTPUT
-        echo "Version extracted: VERSION_HOST"
+        VERSION_HOST="$VERSION_HOST-preview"
+        echo "version_host=$VERSION_HOST" >> $GITHUB_OUTPUT
+        echo "Version extracted: $VERSION_HOST"
 
     - name: Build the Project (Client Release)
       run: dotnet build Berrevoets.Aspire.client.Mail/Berrevoets.Aspire.client.Mail.csproj --configuration Release
@@ -56,13 +56,13 @@ jobs:
       shell: bash
       run: |
         VERSION_CLIENT=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' Berrevoets.Aspire.client.Mail/Berrevoets.Aspire.client.Mail.csproj)
-        if [ -z "VERSION_CLIENT" ]; then
+        if [ -z "$VERSION_CLIENT" ]; then
           echo "Error: Version could not be extracted."
           exit 1
         fi
-        VERSION_CLIENT="VERSION_CLIENT-preview"
-        echo "version_client=VERSION_CLIENT" >> $GITHUB_OUTPUT
-        echo "Version extracted: VERSION_CLIENT"
+        VERSION_CLIENT="$VERSION_CLIENT-preview"
+        echo "version_client=$VERSION_CLIENT" >> $GITHUB_OUTPUT
+        echo "Version extracted: $VERSION_CLIENT"
 
 
   publish:
