@@ -33,7 +33,7 @@ jobs:
       run: dotnet test --no-restore --verbosity normal
 
     - name: Extract version from .csproj for hosting and append -preview
-      id: extract-version
+      id: extract-host-version
       shell: bash
       run: |
         VERSION_HOST=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' Berrevoets.Aspire.Hosting.MailDev/Berrevoets.Aspire.Hosting.MailDev.csproj)
@@ -52,7 +52,7 @@ jobs:
       run: dotnet test --no-restore --verbosity normal
 
     - name: Extract version from .csproj for client and append -preview
-      id: extract-version
+      id: extract-client-version
       shell: bash
       run: |
         VERSION_CLIENT=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' Berrevoets.Aspire.client.Mail/Berrevoets.Aspire.client.Mail.csproj)
