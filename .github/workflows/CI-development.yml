@@ -70,7 +70,7 @@ jobs:
         fi
         mkdir "${{ github.workspace }}/output"
 
-    - name: Build the solution (Release) again for packaging
+    - name: Build the solution (Hosting Release) again for packaging
       run: |
         echo "Building NuGet package with version: ${{ needs.build.outputs.version }}"
         dotnet build Berrevoets.Aspire.Hosting.MailDev/Berrevoets.Aspire.Hosting.MailDev.csproj --configuration Release /p:PackageVersion=${{ needs.build.outputs.version }}
@@ -78,7 +78,17 @@ jobs:
     - name: Pack Preview NuGet package (with symbols)
       run: |
         echo "Packing NuGet package with version: ${{ needs.build.outputs.version }}"
-        dotnet pack Berrevoets.Aspire.Hosting.MailDev/Berrevoets.Aspire.Hosting.MailDev.csproj --configuration Release --output "${{ github.workspace }}/output" /p:PackageVersion=${{ needs.build.outputs.version }} /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg
+        dotnet pack Berrevoets.Aspire.Hosting.MailDev/Berrevoets.Aspire.Hosting.MailDev.csproj --configuration Release --output "${{ github.workspace }}/output" /p:PackageVersion=${{ needs.build.outputs.version }} /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg  
+
+    - name: Build the solution (Client Release) again for packaging
+      run: |
+        echo "Building NuGet package with version: ${{ needs.build.outputs.version }}"
+        dotnet build Berrevoets.Aspire.Client.Mail/Berrevoets.Aspire.Client.Mail.csproj --configuration Release /p:PackageVersion=${{ needs.build.outputs.version }}
+
+    - name: Pack Preview NuGet package (with symbols)
+      run: |
+        echo "Packing NuGet package with version: ${{ needs.build.outputs.version }}"
+        dotnet pack Berrevoets.Aspire.Client.Mail/Berrevoets.Aspire.Client.Mail.csproj --configuration Release --output "${{ github.workspace }}/output" /p:PackageVersion=${{ needs.build.outputs.version }} /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg
 
     - name: List output directory
       shell: bash

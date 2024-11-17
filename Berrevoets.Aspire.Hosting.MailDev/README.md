@@ -14,7 +14,7 @@ dotnet add package Berrevoets.Aspire.Hosting.MailDev
 
 ## Usage example
 
-Then, in the _Program.cs_ file of `AppHost`, add a MongoDB resource and consume the connection using the following methods:
+Then, in the _Program.cs_ file of `AppHost`, add a MailDev resource and consume the connection using the following methods:
 
 ```csharp
 var maildev = builder.AddMailDev("maildev");
