@@ -26,24 +26,43 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
 
-    - name: Build the solution (Release)
+    - name: Build the Project (Host Release)
       run: dotnet build Berrevoets.Aspire.Hosting.MailDev/Berrevoets.Aspire.Hosting.MailDev.csproj --configuration Release
 
     - name: Run tests
       run: dotnet test --no-restore --verbosity normal
 
-    - name: Extract version from .csproj and append -preview
+    - name: Extract version from .csproj for hosting and append -preview
       id: extract-version
       shell: bash
       run: |
-        VERSION=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' Berrevoets.Aspire.Hosting.MailDev/Berrevoets.Aspire.Hosting.MailDev.csproj)
-        if [ -z "$VERSION" ]; then
+        VERSION_HOST=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' Berrevoets.Aspire.Hosting.MailDev/Berrevoets.Aspire.Hosting.MailDev.csproj)
+        if [ -z "VERSION_HOST" ]; then
           echo "Error: Version could not be extracted."
           exit 1
         fi
-        VERSION="$VERSION-preview"
-        echo "version=$VERSION" >> $GITHUB_OUTPUT
-        echo "Version extracted: $VERSION"
+        VERSION_HOST="VERSION_HOST-preview"
+        echo "version_host=VERSION_HOST" >> $GITHUB_OUTPUT
+        echo "Version extracted: VERSION_HOST"
+
+    - name: Build the Project (Client Release)
+      run: dotnet build Berrevoets.Aspire.client.Mail/Berrevoets.Aspire.client.Mail.csproj --configuration Release
+
+    - name: Run tests
+      run: dotnet test --no-restore --verbosity normal
+
+    - name: Extract version from .csproj for client and append -preview
+      id: extract-version
+      shell: bash
+      run: |
+        VERSION_CLIENT=$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' Berrevoets.Aspire.client.Mail/Berrevoets.Aspire.client.Mail.csproj)
+        if [ -z "VERSION_CLIENT" ]; then
+          echo "Error: Version could not be extracted."
+          exit 1
+        fi
+        VERSION_CLIENT="VERSION_CLIENT-preview"
+        echo "version_client=VERSION_CLIENT" >> $GITHUB_OUTPUT
+        echo "Version extracted: VERSION_CLIENT"
 
 
   publish:
@@ -72,23 +91,23 @@ jobs:
 
     - name: Build the solution (Hosting Release) again for packaging
       run: |
-        echo "Building NuGet package with version: ${{ needs.build.outputs.version }}"
-        dotnet build Berrevoets.Aspire.Hosting.MailDev/Berrevoets.Aspire.Hosting.MailDev.csproj --configuration Release /p:PackageVersion=${{ needs.build.outputs.version }}
+        echo "Building NuGet package with version: ${{ needs.build.outputs.version_host }}"
+        dotnet build Berrevoets.Aspire.Hosting.MailDev/Berrevoets.Aspire.Hosting.MailDev.csproj --configuration Release /p:PackageVersion=${{ needs.build.outputs.version_host }}
 
     - name: Pack Preview NuGet package (with symbols)
       run: |
-        echo "Packing NuGet package with version: ${{ needs.build.outputs.version }}"
-        dotnet pack Berrevoets.Aspire.Hosting.MailDev/Berrevoets.Aspire.Hosting.MailDev.csproj --configuration Release --output "${{ github.workspace }}/output" /p:PackageVersion=${{ needs.build.outputs.version }} /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg  
+        echo "Packing NuGet package with version: ${{ needs.build.outputs.version_host }}"
+        dotnet pack Berrevoets.Aspire.Hosting.MailDev/Berrevoets.Aspire.Hosting.MailDev.csproj --configuration Release --output "${{ github.workspace }}/output" /p:PackageVersion=${{ needs.build.outputs.version_host }} /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg  
 
     - name: Build the solution (Client Release) again for packaging
       run: |
-        echo "Building NuGet package with version: ${{ needs.build.outputs.version }}"
-        dotnet build Berrevoets.Aspire.Client.Mail/Berrevoets.Aspire.Client.Mail.csproj --configuration Release /p:PackageVersion=${{ needs.build.outputs.version }}
+        echo "Building NuGet package with version: ${{ needs.build.outputs.version_client }}"
+        dotnet build Berrevoets.Aspire.Client.Mail/Berrevoets.Aspire.Client.Mail.csproj --configuration Release /p:PackageVersion=${{ needs.build.outputs.version_client }}
 
     - name: Pack Preview NuGet package (with symbols)
       run: |
-        echo "Packing NuGet package with version: ${{ needs.build.outputs.version }}"
-        dotnet pack Berrevoets.Aspire.Client.Mail/Berrevoets.Aspire.Client.Mail.csproj --configuration Release --output "${{ github.workspace }}/output" /p:PackageVersion=${{ needs.build.outputs.version }} /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg
+        echo "Packing NuGet package with version: ${{ needs.build.outputs.version_client }}"
+        dotnet pack Berrevoets.Aspire.Client.Mail/Berrevoets.Aspire.Client.Mail.csproj --configuration Release --output "${{ github.workspace }}/output" /p:PackageVersion=${{ needs.build.outputs.version_client }} /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg
 
     - name: List output directory
       shell: bash
