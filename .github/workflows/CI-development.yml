@@ -13,7 +13,8 @@ jobs:
   build:
     runs-on: windows-latest
     outputs:
-      version: ${{ steps.extract-version.outputs.version }}
+      version_host: ${{ steps.extract-host-version.outputs.version_host }}
+      version_client: ${{ steps.extract-client-version.outputs.version_client }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
