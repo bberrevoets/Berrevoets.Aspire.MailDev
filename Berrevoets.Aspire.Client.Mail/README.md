@@ -1,4 +1,4 @@
-# Berrevoets.Aspire.Hosting.Mail library
+# Berrevoets.Aspire.Client.Mail library
 
 Registers a mail client
 
@@ -9,7 +9,7 @@ Registers a mail client
 In your Application project, install the .NET Aspire Mail client library with [NuGet](https://www.nuget.org):
 
 ```dotnetcli
-dotnet add package Berrevoets.Aspire.Hosting.Mail
+dotnet add package Berrevoets.Aspire.Client.Mail
 ```
 
 ## Usage example
