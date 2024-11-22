@@ -1,4 +1,4 @@
-# Berrevoets.Aspire.Hosting.Mail library
+# Berrevoets.Aspire.Client.Mail library
 
 Registers a mail client
 
