@@ -34,8 +34,9 @@ async (MailKitClientFactory factory, string email) =>
 ```
 
 ## Additional documentation
-https://learn.microsoft.com/dotnet/aspire
+
+<https://learn.microsoft.com/dotnet/aspire>
 
 ## Feedback & contributing
 
-https://github.com/bberrevoets/Berrevoets.Aspire.MailDev
+<https://github.com/bberrevoets/Berrevoets.Aspire.MailDev>
