@@ -46,7 +46,7 @@ dotnet run --project MailDev.AppHost
     `smtp://{host}:{port}`
   - `MailDevResourceBuilderExtensions` (namespace `Aspire.Hosting`) -
     Extension method `AddMailDev()` on `IDistributedApplicationBuilder` that
-    configures the `maildev/maildev:2.1.0` Docker container
+    configures the `maildev/maildev:2.2.1` Docker container
 - **Berrevoets.Aspire.Client.Mail** - Client-side library (no source files
   yet). Intended for `builder.AddMailKitClient("maildev")` using MailKit
 
@@ -61,7 +61,7 @@ dotnet run --project MailDev.AppHost
 
 - Hosting resource types use namespace `Aspire.Hosting.ApplicationModel`
 - Hosting extension methods use namespace `Aspire.Hosting`
-- Both library projects target `net9.0` and generate NuGet packages on build
+- Both library projects target `net10.0` and generate NuGet packages on build
 - Package versions are set in each `.csproj` `<Version>` element
 - Container image tags are defined in `MailDevContainerImageTags` class
 
