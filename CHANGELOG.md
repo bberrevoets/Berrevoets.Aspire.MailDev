@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [10.0.0] - 2026-03-07
+
+### Changed
+
+- Migrate all projects from .NET 9 to .NET 10
+- Upgrade Aspire hosting from 9.0.0 to 13.1.2
+- Upgrade MailDev container image from 2.1.0 to 2.2.1
+- Upgrade Microsoft.Extensions.Http.Resilience to 10.3.0
+- Upgrade Microsoft.Extensions.ServiceDiscovery to 10.3.0
+- Upgrade all OpenTelemetry packages from 1.9.0 to 1.15.0
+- Restructure AppHost to use inline Aspire SDK reference
+- Add tracing filter to exclude health check endpoints
+- Update CI/CD workflows to use .NET 10 SDK
+- Add global.json pinning .NET 10 SDK
+
 ## [9.0.0] - 2024-10-11
 
 ### Added
