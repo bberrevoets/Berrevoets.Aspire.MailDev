@@ -1,0 +1,24 @@
+.github/workflows/CI.yml
+  s_3b0b271fd70131::t_17f581fbe74c58 113-120,122,125
+  s_3b0b271fd70131::t_22e1f885a6717d 64-68
+AGENTS.md
+  s_3b0b271fd70131::t_08ed0ec2a0d604 113-119
+CHANGELOG.md
+  s_3b0b271fd70131::t_746f262bfc7865 13-20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "46ec3101bf9052b0d32e6776dc755217a55219d3",
+  "prompts": {},
+  "sessions": {
+    "s_3b0b271fd70131": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c18cd481-3e58-4b5d-9906-3fc2978829d3",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "B.N. Berrevoets <bert@berrevoets.net>"
+    }
+  }
+}
