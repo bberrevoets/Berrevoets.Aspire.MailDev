@@ -2,9 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
+## Attributors
+
+- **Bert Berrevoets** -- project owner
+- **Claude Opus 4.6** -- co-author of the .NET 10 / Aspire 13 migration and the project documentation (2026-03)
+- **Claude Opus 5.5** -- co-author of the 2026-11 AI agent setup
+
+## [Unreleased]
+
+### Changed
+
+Author: *Claude Opus 5.5*
+
+- AI agent setup to Bert's standard: `CLAUDE.md` moved to `AGENTS.md` (agent-neutral, for Claude Code, Codex and
+  others) with a `CLAUDE.md` stub that imports it; markdownlint line length 120 → 180; repo-init blocks in
+  `.gitignore` and `.gitattributes` (the two package icons stay plain git blobs); README Conventions section;
+  Attributors and Author lines in this changelog
+- `main` is the only long-lived branch: the default branch moved from `Development` to `main` and the preview
+  workflow `CI-development.yml` is removed, so `-preview` packages are no longer published. `CI.yml` builds pull
+  requests and publishes on every merge to `main` (only a raised `<Version>` reaches NuGet)
+
 ## [10.0.0] - 2026-03-07
 
 ### Changed
+
+Author: *Bert Berrevoets & Claude Opus 4.6*
 
 - Migrate all projects from .NET 9 to .NET 10
 - Upgrade Aspire hosting from 9.0.0 to 13.1.2
@@ -21,17 +43,23 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+Author: *Bert Berrevoets*
+
 - Update target framework to .NET 9.0 and bump package versions to 9.0.0
 - Add new Mail client project (`Berrevoets.Aspire.Client.Mail`)
 - Update CI pipeline for .NET 9.0 with separate host and client build steps
 
 ### Changed
 
+Author: *Bert Berrevoets*
+
 - Remove project reference from Client.Mail (standalone package)
 
 ## [8.2.1] - 2024-10-10
 
 ### Features
+
+Author: *Bert Berrevoets*
 
 - Initial release
 - MailDev hosting integration for .NET Aspire (`Berrevoets.Aspire.Hosting.MailDev`)
