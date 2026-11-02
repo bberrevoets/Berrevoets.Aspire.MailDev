@@ -10,6 +10,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+Author: *Claude Opus 5.5*
+
+- Publishing to NuGet.org uses Trusted Publishing (`NuGet/login`, GitHub OIDC) instead of the stored `NUGET_API_KEY`
+  secret, which had expired on 2026-10-21: the publish job of the 10.1.0 merge failed with 403, so 10.1.0 reaches
+  NuGet with this change
+
 ## [10.1.0] - 2026-11-02
 
 `Berrevoets.Aspire.Hosting.MailDev` only; `Berrevoets.Aspire.Client.Mail` stays 10.0.0.
