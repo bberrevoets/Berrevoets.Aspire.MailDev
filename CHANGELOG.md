@@ -10,10 +10,24 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-### Changed
+## [10.1.0] - 2026-11-02
+
+`Berrevoets.Aspire.Hosting.MailDev` only; `Berrevoets.Aspire.Client.Mail` stays 10.0.0.
+
+### Security
 
 Author: *Claude Opus 5.5*
 
+- The package now depends on Aspire.Hosting 13.6.4, which brings MessagePack 2.5.307. Aspire.Hosting 13.1.2 pulled in
+  MessagePack 2.5.192 through StreamJsonRpc, affected by GHSA-hv8m-jj95-wg3x (high: LZ4 decompression of bad input),
+  GHSA-2f33-pr97-265q and GHSA-2x83-8g95-xh59 (moderate), all fixed in 2.5.301
+
+### Changed
+
+Author: *Bert Berrevoets & Claude Opus 5.5*
+
+- Aspire 13.1.2 → 13.6.4 (`Aspire.Hosting` in the Hosting package, `Aspire.AppHost.Sdk` in the sample AppHost).
+  AppHosts that use this package now need Aspire.Hosting 13.6.4 or newer, hence the minor version
 - AI agent setup to Bert's standard: `CLAUDE.md` moved to `AGENTS.md` (agent-neutral, for Claude Code, Codex and
   others) with a `CLAUDE.md` stub that imports it; markdownlint line length 120 → 180; repo-init blocks in
   `.gitignore` and `.gitattributes` (the two package icons stay plain git blobs); README Conventions section;
