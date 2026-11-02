@@ -112,11 +112,15 @@ One GitHub Actions workflow, **CI.yml** (`windows-latest`):
 - On a push to `main` (every merge) or a manual `workflow_dispatch`: also pack both packages with symbols (`.snupkg`)
   and push them to NuGet.org.
 - **Trusted Publishing, no API key:** the `publish` job gets a NuGet API key valid for 1 hour from `NuGet/login`
-  (GitHub OIDC, `id-token: write`). It works only through the policy on nuget.org (account `bberrevoets` → Trusted
-  Publishing): repository `bberrevoets/Berrevoets.Aspire.MailDev`, workflow file `CI.yml`, no environment, both
-  packages. Renaming `CI.yml`, moving the push to another workflow, adding a GitHub environment or renaming the
-  repository breaks publishing until the policy is updated to match. Never add a stored `NUGET_API_KEY` secret again:
-  the old one expired on 2026-10-21, and the 10.1.0 publish failed with 403 on 2026-11-02 until this was set up.
+  (GitHub OIDC, `id-token: write`). It works only through the policy on nuget.org (Bert's account → Trusted
+  Publishing): **policy owner `BerrevoetsSystems`** (the nuget.org organization that owns both packages), repository
+  `bberrevoets/Berrevoets.Aspire.MailDev`, workflow file `CI.yml`, no environment. `user: bberrevoets` in the workflow
+  is only who asks for the key; the policy owner decides which packages it may push. A policy owned by the personal
+  account `bberrevoets` gets a valid key and then 403 on every push (2026-11-02; the owner of an existing policy
+  cannot be edited, so it was recreated). Renaming `CI.yml`, moving the push to another workflow, adding a GitHub
+  environment or renaming the repository breaks publishing until the policy is updated to match. Never add a stored
+  `NUGET_API_KEY` secret again: the old one expired on 2026-10-21, and the 10.1.0 publish failed with 403 until this
+  was set up (published 2026-11-02 23:09 UTC by re-running the publish job).
 - The push uses `--skip-duplicate`: a merge **without** a new `<Version>` publishes nothing, silently. A change that
   must reach NuGet raises `<Version>` in that package's `.csproj` (the two packages are versioned separately) together
   with a CHANGELOG release heading. A merge publishes for real: it cannot be taken back on NuGet (only unlisted).
