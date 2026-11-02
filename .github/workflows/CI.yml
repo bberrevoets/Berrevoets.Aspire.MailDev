@@ -110,8 +110,8 @@ jobs:
       shell: bash
       run: ls "${{ github.workspace }}/output"
 
-    # Exchanges the OIDC token for a NuGet API key that is valid for 1 hour (policy on nuget.org: owner bberrevoets,
-    # repository Berrevoets.Aspire.MailDev, workflow CI.yml). Requested right before the pushes.
+    # Exchanges the OIDC token for a NuGet API key that is valid for 1 hour (policy on nuget.org: owner
+    # BerrevoetsSystems, repository Berrevoets.Aspire.MailDev, workflow CI.yml). Requested right before the pushes.
     - name: NuGet login (OIDC, Trusted Publishing)
       id: login
       uses: NuGet/login@v1
