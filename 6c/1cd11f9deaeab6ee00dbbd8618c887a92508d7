@@ -1,0 +1,23 @@
+CHANGELOG.md
+  s_3b0b271fd70131::t_d2df8537bd9f88 13-17,21-30
+Berrevoets.Aspire.Hosting.MailDev/Berrevoets.Aspire.Hosting.MailDev.csproj
+  s_3b0b271fd70131::t_8425da12ce7766 6,42
+MailDev.AppHost/MailDev.AppHost.csproj
+  s_3b0b271fd70131::t_65d9f6aedcd6fd 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6c1cd11f9deaeab6ee00dbbd8618c887a92508d7",
+  "prompts": {},
+  "sessions": {
+    "s_3b0b271fd70131": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c18cd481-3e58-4b5d-9906-3fc2978829d3",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "B.N. Berrevoets <bert@berrevoets.net>"
+    }
+  }
+}
