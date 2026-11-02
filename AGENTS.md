@@ -110,7 +110,13 @@ One GitHub Actions workflow, **CI.yml** (`windows-latest`):
 
 - On every pull request to `main`: restore, build Release, run tests (none yet).
 - On a push to `main` (every merge) or a manual `workflow_dispatch`: also pack both packages with symbols (`.snupkg`)
-  and push them to NuGet.org with `NUGET_API_KEY`.
+  and push them to NuGet.org.
+- **Trusted Publishing, no API key:** the `publish` job gets a NuGet API key valid for 1 hour from `NuGet/login`
+  (GitHub OIDC, `id-token: write`). It works only through the policy on nuget.org (account `bberrevoets` → Trusted
+  Publishing): repository `bberrevoets/Berrevoets.Aspire.MailDev`, workflow file `CI.yml`, no environment, both
+  packages. Renaming `CI.yml`, moving the push to another workflow, adding a GitHub environment or renaming the
+  repository breaks publishing until the policy is updated to match. Never add a stored `NUGET_API_KEY` secret again:
+  the old one expired on 2026-10-21, and the 10.1.0 publish failed with 403 on 2026-11-02 until this was set up.
 - The push uses `--skip-duplicate`: a merge **without** a new `<Version>` publishes nothing, silently. A change that
   must reach NuGet raises `<Version>` in that package's `.csproj` (the two packages are versioned separately) together
   with a CHANGELOG release heading. A merge publishes for real: it cannot be taken back on NuGet (only unlisted).
