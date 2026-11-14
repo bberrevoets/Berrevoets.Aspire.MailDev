@@ -103,6 +103,9 @@ dotnet run --project MailDev.AppHost
 - Both library projects target `net10.0` and generate NuGet packages on build
 - Package versions are set in each `.csproj` `<Version>` element
 - Container image tags are defined in `MailDevContainerImageTags` class
+- An Aspire update touches two places: `Aspire.Hosting` in the Hosting package and `Aspire.AppHost.Sdk/<version>` in
+  the first line of `MailDev.AppHost.csproj`. Dependabot only raises the first (PR #17, 2026-11-14): raise the SDK by
+  hand on its branch, or the sample AppHost keeps the old dashboard and orchestration packages
 
 ## CI/CD
 
