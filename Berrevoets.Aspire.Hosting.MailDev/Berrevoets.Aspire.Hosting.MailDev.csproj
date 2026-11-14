@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	  <Version>10.1.0</Version>
+	  <Version>10.1.1</Version>
 	  <Authors>Bert Berrevoets</Authors>
 	  <Company>Berrevoets Systems</Company>
 	  <Product>Berrevoets.Aspire.Hosting.MailDev</Product>
